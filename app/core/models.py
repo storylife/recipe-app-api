@@ -7,15 +7,11 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
         """Creates and saves a new user"""
-        user = self.model(email=self.__normalizeEmail(email), **extra_fields)
+        user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
-
-    def __normalizeEmail(self, email):
-        """Normalizes an email address"""
-        return email.lower()
 
 
 class User(AbstractBaseUser, PermissionsMixin):
